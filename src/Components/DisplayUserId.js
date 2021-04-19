@@ -1,36 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import DisplayAddressInformation from './DisplayAddressInformation';
 
-function DisplayUserId() {
+function DisplayUserId({setUserIdToFetchEvent}) {
     const GetUserAddresses = "http://localhost:5000/user_ids"
-    const [userId, getUserId] = useState([]);
+    const [userId, setUserId] = useState([]);
     const [value, setValue] = useState();
+
 
     //ComponentDidMount
     useEffect(() => {
         async function answer() {
             const result = await fetch(GetUserAddresses)
             .then(response => response.json())
-            .then(data => getUserId(data));
-            return result
+            .then(data => setUserId(data));
+            return result 
         }
         answer();
     }, [GetUserAddresses])
 
+    function onChange(e) {
+        setValue(e.target.value)
+        setUserIdToFetchEvent({})
+    }
 
     return (
         <div>
             <form>
                 <label>
                 show user id's
-                <select onChange={e => setValue(e.target.value)} value={value}>
-                    {userId.map(value => (
-                    <option placeholder="< Select User ID >" value={value}>{value}</option>
+                <select onChange={onChange} value={value}>
+                    {userId.map((value, key) => (
+                    <option placeholder="< Select User ID >" key={key} value={value}>{value}</option>
                     ))}
-                </select>
+                </select> 
                 </label>
             </form>
-            <DisplayAddressInformation userId={value} />
+            <DisplayAddressInformation setUserIdToFetchEvent={setUserIdToFetchEvent} userId={value} setValue={setValue}/>
         </div>
     )
 }
