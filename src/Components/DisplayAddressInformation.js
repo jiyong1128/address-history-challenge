@@ -11,15 +11,16 @@ function DisplayAddressInformation({ selectedUserId, setUserIdToFetchEvent }) {
 
   useEffect(() => {
     async function fetchAddress() {
-      const result = await fetch(getAllAddressUrl)
+      const address = await fetch(getAllAddressUrl)
         .then((response) => response.json())
         .then((data) => setAddressInfo(data));
-      return result;
+      return address;
     }
     fetchAddress();
-  }, [addressInfo]);
+  }, [selectedUserId]);
 
   function onClick(obj) {
+    // onclick of the address, the event should be updated
     setUserIdToFetchEvent(obj);
   }
 
@@ -41,7 +42,7 @@ function DisplayAddressInformation({ selectedUserId, setUserIdToFetchEvent }) {
 
   return (
     <div>
-      Address information userId
+      Address information
       <List component="nav" aria-label="mailbox folders">
         {addressInfo.map((address, key) => (
           <div key={key}>{showAddressObj(address)}</div>

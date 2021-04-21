@@ -16,13 +16,13 @@ function DisplayEventsOnClick({ userIdToFetchEvent }) {
 
   useEffect(() => {
     async function fetchAllEvents() {
-      const result = await fetch(getEventsUrl) // fetch the events based on the userID that I get by clicking on the addressDescription from DisplayAddInfo
+      const events = await fetch(getEventsUrl) // fetch the events based on the userID that I get by clicking on the addressDescription from DisplayAddInfo
         .then((response) => response.json())
         .then((data) => setUserEvents(addKey(data))); //save it up in userEvents
-      return result;
+      return events;
     }
     fetchAllEvents();
-  }, []);
+  }, [userIdToFetchEvent]); // whenever userIdFetch is updated, re-render
 
   function addKey(data) {
     // copying the array value using the map to add isSelected into the json object.

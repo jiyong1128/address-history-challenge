@@ -9,15 +9,15 @@ function DisplayUserId({ setUserIdToFetchEvent }) {
 
   useEffect(() => {
     async function fetchAllUserId() {
-      const result = await fetch(getAllUserIdUrl)
+      const userId = await fetch(getAllUserIdUrl)
         .then((response) => response.json())
         .then((data) => {
           setAllUserIds(data);
         });
-      return result;
+      return userId;
     }
     fetchAllUserId();
-  }, [allUserIds]);
+  }, []);
 
   function onChange(e) {
     // whenever we select and change the value in userId dropdown, change selectedUserId also reset the userIdToFetch to empty to make the event empty.
@@ -29,7 +29,7 @@ function DisplayUserId({ setUserIdToFetchEvent }) {
     <div>
       <form>
         <label>
-          <select value={selectedUserId} onChange={onChange}>
+          <select value={selectedUserId} onChange={(e) => onChange(e)}>
             <option>Select User ID</option>
             {allUserIds.map((userId, key) => (
               <option key={key} value={userId}>

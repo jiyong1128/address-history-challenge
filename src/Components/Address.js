@@ -8,7 +8,7 @@ function Address() {
   const [userIdToFetchEvent, setUserIdToFetchEvent] = useState({});
 
   function displayEventComponent() {
-    return userIdToFetchEvent && Object.keys(userIdToFetchEvent).length ? (
+    return userIdToFetchEvent && Object.keys(userIdToFetchEvent).length ? ( // passing down setUserIdToFetchEvent state as a prop, so when we actually have data, call the event component
       <DisplayEventsOnClick userIdToFetchEvent={userIdToFetchEvent} />
     ) : (
       "No Events to show"
