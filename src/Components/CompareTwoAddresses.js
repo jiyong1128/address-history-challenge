@@ -5,7 +5,6 @@ import { ListItem } from "@material-ui/core";
 import List from "@material-ui/core/List";
 
 function CompareTwoAddresses(props) {
-  console.log(props.location.state);
   const data = props.location.state;
   const { addresses } = useContext(GlobalContext);
 

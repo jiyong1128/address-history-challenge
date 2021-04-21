@@ -67,7 +67,6 @@ function DisplayEventsOnClick() {
   }
 
   const onSubmit = (e) => {
-    console.log(userEvents, "userevents");
     e.preventDefault();
 
     history.push({pathname: "/compare", state: userEvents})

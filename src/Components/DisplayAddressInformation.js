@@ -22,7 +22,6 @@ function DisplayAddressInformation({ selectedUserId }) {
 
   function onClick(obj) {
     // onclick of the address, the event should be updated
-    console.log(obj, "obj");
     editAddress(obj);
   }
 
@@ -35,7 +34,7 @@ function DisplayAddressInformation({ selectedUserId }) {
         </div>
       );
     }
-    console.log(addressInfoObj, "what abt")
+    
     return (
       <ListItem onClick={() => onClick(obj)} style={{ display: "grid" }} button>
         {[...addressInfoObj]}

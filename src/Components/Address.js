@@ -8,7 +8,6 @@ import { GlobalContext } from "../context/GlobalState";
 function Address() { //access here 
   const [userIdToFetchEvent, setUserIdToFetchEvent] = useState({});
   const { addresses } = useContext(GlobalContext);
-  console.log(addresses);
 
   function displayEventComponent() {
     return addresses.address && Object.keys(addresses.address).length ? ( // passing down setUserIdToFetchEvent state as a prop, so when we actually have data, call the event component
