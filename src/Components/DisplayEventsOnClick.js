@@ -1,17 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormGroup from "@material-ui/core/FormGroup";
+import { Link, useHistory } from "react-router-dom";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Button from "@material-ui/core/Button";
+import { GlobalContext } from "../context/GlobalState";
 
 import List from "@material-ui/core/List";
 
-function DisplayEventsOnClick({ userIdToFetchEvent }) {
+function DisplayEventsOnClick() {
   // onclick of the single event, show this
-  const getEventsUrl = `http://localhost:5000/addresses/${userIdToFetchEvent.id}/events`;
+  const { addresses } = useContext(GlobalContext);
+  const getEventsUrl = `http://localhost:5000/addresses/${addresses.address.id}/events`;
 
+  const history = useHistory();
   const [userEvents, setUserEvents] = useState([]);
 
   useEffect(() => {
@@ -22,7 +26,7 @@ function DisplayEventsOnClick({ userIdToFetchEvent }) {
       return events;
     }
     fetchAllEvents();
-  }, [userIdToFetchEvent]); // whenever userIdFetch is updated, re-render
+  }, [addresses.address]); // whenever userIdFetch is updated, re-render
 
   function addKey(data) {
     // copying the array value using the map to add isSelected into the json object.
@@ -62,6 +66,13 @@ function DisplayEventsOnClick({ userIdToFetchEvent }) {
     setUserEvents(newUserEventArr);
   }
 
+  const onSubmit = (e) => {
+    console.log(userEvents, "userevents");
+    e.preventDefault();
+
+    history.push({pathname: "/compare", state: userEvents})
+  }
+
   return (
     <div>
       Events
@@ -87,7 +98,9 @@ function DisplayEventsOnClick({ userIdToFetchEvent }) {
             ))
           : null}
       </List>
-      <Button variant="outlined">Compare</Button>
+      <form onSubmit={onSubmit}>
+        <button variant="outlined">Compare</button>
+      </form>
     </div>
   );
 }

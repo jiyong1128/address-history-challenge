@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from 'react';
 import DisplayUserId from "./DisplayUserId";
 import DisplayEventsOnClick from "./DisplayEventsOnClick";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+import { GlobalContext } from "../context/GlobalState";
 
-function Address() {
+function Address() { //access here 
   const [userIdToFetchEvent, setUserIdToFetchEvent] = useState({});
+  const { addresses } = useContext(GlobalContext);
+  console.log(addresses);
 
   function displayEventComponent() {
-    return userIdToFetchEvent && Object.keys(userIdToFetchEvent).length ? ( // passing down setUserIdToFetchEvent state as a prop, so when we actually have data, call the event component
-      <DisplayEventsOnClick userIdToFetchEvent={userIdToFetchEvent} />
+    return addresses.address && Object.keys(addresses.address).length ? ( // passing down setUserIdToFetchEvent state as a prop, so when we actually have data, call the event component
+      <DisplayEventsOnClick />
     ) : (
       "No Events to show"
     );

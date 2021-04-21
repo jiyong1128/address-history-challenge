@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { GlobalContext } from "../context/GlobalState";
 
 import List from "@material-ui/core/List";
 import ListItemText from "@material-ui/core/ListItemText";
 import { ListItem } from "@material-ui/core";
 
-function DisplayAddressInformation({ selectedUserId, setUserIdToFetchEvent }) {
+function DisplayAddressInformation({ selectedUserId }) {
   const getAllAddressUrl = `http://localhost:5000/users/${selectedUserId}/addresses`;
-
+  const { editAddress } = useContext(GlobalContext);
   const [addressInfo, setAddressInfo] = useState([]);
 
   useEffect(() => {
@@ -21,7 +22,8 @@ function DisplayAddressInformation({ selectedUserId, setUserIdToFetchEvent }) {
 
   function onClick(obj) {
     // onclick of the address, the event should be updated
-    setUserIdToFetchEvent(obj);
+    console.log(obj, "obj");
+    editAddress(obj);
   }
 
   function showAddressObj(obj) {
@@ -33,6 +35,7 @@ function DisplayAddressInformation({ selectedUserId, setUserIdToFetchEvent }) {
         </div>
       );
     }
+    console.log(addressInfoObj, "what abt")
     return (
       <ListItem onClick={() => onClick(obj)} style={{ display: "grid" }} button>
         {[...addressInfoObj]}

@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from 'react';
 import DisplayAddressInformation from "./DisplayAddressInformation";
+import { GlobalContext } from "../context/GlobalState";
 
-function DisplayUserId({ setUserIdToFetchEvent }) {
+function DisplayUserId() {
   // to display to value of the address upon the allUserIds
   const getAllUserIdUrl = "http://localhost:5000/user_ids"; // getting all the user Id's
   const [allUserIds, setAllUserIds] = useState([]);
   const [selectedUserId, setSelectedUserId] = useState("");
+  const { editAddress, addresses } = useContext(GlobalContext);
 
   useEffect(() => {
     async function fetchAllUserId() {
@@ -16,20 +18,21 @@ function DisplayUserId({ setUserIdToFetchEvent }) {
         });
       return userId;
     }
+
     fetchAllUserId();
   }, []);
 
   function onChange(e) {
     // whenever we select and change the value in userId dropdown, change selectedUserId also reset the userIdToFetch to empty to make the event empty.
     setSelectedUserId(e.target.value);
-    setUserIdToFetchEvent({});
+    editAddress({});
   }
 
   return (
     <div>
       <form>
         <label>
-          <select value={selectedUserId} onChange={(e) => onChange(e)}>
+          <select value={selectedUserId} onChange={onChange}>
             <option>Select User ID</option>
             {allUserIds.map((userId, key) => (
               <option key={key} value={userId}>
@@ -41,7 +44,6 @@ function DisplayUserId({ setUserIdToFetchEvent }) {
       </form>
       {selectedUserId && selectedUserId.length ? (
         <DisplayAddressInformation
-          setUserIdToFetchEvent={setUserIdToFetchEvent}
           selectedUserId={selectedUserId}
         />
       ) : (
